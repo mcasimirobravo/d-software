@@ -1,0 +1,43 @@
+CREATE DATABASE bd_ventas_analitica;
+USE bd_ventas_analitica;
+CREATE TABLE dim_cliente (
+    id_cliente INT PRIMARY KEY,
+    nombre_cliente VARCHAR(100),
+    ciudad VARCHAR(50),
+    pais VARCHAR(50)
+);
+
+CREATE TABLE dim_producto (
+    id_producto INT PRIMARY KEY,
+    nombre_producto VARCHAR(100),
+    categoria VARCHAR(50),
+    precio DECIMAL(10,2)
+);
+
+CREATE TABLE dim_empleado (
+    id_empleado INT PRIMARY KEY,
+    nombre_empleado VARCHAR(100),
+    cargo VARCHAR(50)
+);
+
+CREATE TABLE dim_tiempo (
+    id_tiempo INT PRIMARY KEY AUTO_INCREMENT,
+    fecha DATE,
+    anio INT,
+    mes INT,
+    dia INT
+);
+
+CREATE TABLE hechos_ventas (
+    id_hecho INT PRIMARY KEY AUTO_INCREMENT,
+    id_cliente INT,
+    id_producto INT,
+    id_empleado INT,
+    id_tiempo INT,
+    cantidad INT,
+    total DECIMAL(10,2),
+    FOREIGN KEY (id_cliente) REFERENCES dim_cliente(id_cliente),
+    FOREIGN KEY (id_producto) REFERENCES dim_producto(id_producto),
+    FOREIGN KEY (id_empleado) REFERENCES dim_empleado(id_empleado),
+    FOREIGN KEY (id_tiempo) REFERENCES dim_tiempo(id_tiempo)
+);

@@ -1,0 +1,36 @@
+-- TABLA CLIENTE
+CREATE TABLE cliente (
+    id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    ciudad VARCHAR(50),
+    pais VARCHAR(50)
+);
+
+-- TABLA PRODUCTO
+CREATE TABLE producto (
+    id_producto INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    categoria VARCHAR(50),
+    precio DECIMAL(10,2)
+);
+
+-- TABLA EMPLEADO
+CREATE TABLE empleado (
+    id_empleado INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    cargo VARCHAR(50)
+);
+
+-- TABLA VENTA (transaccional)
+CREATE TABLE venta (
+    id_venta INT PRIMARY KEY AUTO_INCREMENT,
+    id_cliente INT,
+    id_producto INT,
+    id_empleado INT,
+    fecha DATE,
+    cantidad INT,
+    total DECIMAL(10,2),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
+    FOREIGN KEY (id_empleado) REFERENCES empleado(id_empleado)
+);

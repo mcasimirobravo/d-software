@@ -1,0 +1,23 @@
+INSERT INTO dim_cliente (id_cliente, nombre_cliente, ciudad, pais)
+SELECT id_cliente, nombre, ciudad, pais FROM bd_ventas.cliente;
+
+INSERT INTO dim_producto (id_producto, nombre_producto, categoria, precio)
+SELECT id_producto, nombre, categoria, precio FROM bd_ventas.producto;
+
+INSERT INTO dim_empleado (id_empleado, nombre_empleado, cargo)
+SELECT id_empleado, nombre, cargo FROM bd_ventas.empleado;
+
+INSERT INTO dim_tiempo (fecha, anio, mes, dia)
+SELECT DISTINCT fecha, YEAR(fecha), MONTH(fecha), DAY(fecha)
+FROM bd_ventas.venta;
+
+INSERT INTO hechos_ventas (id_cliente, id_producto, id_empleado, id_tiempo, cantidad, total)
+SELECT 
+    v.id_cliente,
+    v.id_producto,
+    v.id_empleado,
+    t.id_tiempo,
+    v.cantidad,
+    v.total
+FROM bd_ventas.venta v
+JOIN dim_tiempo t ON v.fecha = t.fecha;
